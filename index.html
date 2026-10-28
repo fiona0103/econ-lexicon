@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>经济学词典 · 名词解释</title>
+<meta name="description" content="用生活化的语言解释经济学名词：简短定义、详细解释，以及一个能对号入座的生活例子。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231c4a3a'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='34' fill='%23f7f4ee' text-anchor='middle'%3E%E7%BB%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#/" id="brandLink">
+      <span class="brand-mark">经</span>
+      <span class="brand-text">
+        <strong>经济学词典</strong>
+        <em>ECON&nbsp;LEXICON</em>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="#/" class="nav-link" id="navBrowse">词条库</a>
+      <a href="#admin" class="nav-link" id="navAdmin">管理</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ============ 浏览视图 ============ -->
+  <section id="view-browse">
+    <div class="hero wrap">
+      <p class="overline">ECONOMICS&nbsp;GLOSSARY</p>
+      <h1>把经济学<br>讲成<span class="hl">人话</span>。</h1>
+      <p class="lede">从「机会成本」到「损失厌恶」，每个概念都配一句定义、一段解释，和一个你能对号入座的生活场景。</p>
+      <div class="stats">
+        <div class="stat"><b id="statTerms">—</b><span>个词条</span></div>
+        <i class="sep"></i>
+        <div class="stat"><b id="statCats">—</b><span>个分类</span></div>
+        <i class="sep"></i>
+        <div class="stat"><b>持续</b><span>更新中</span></div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="wrap">
+        <div class="searchbox">
+          <svg class="search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+          <input id="search" type="search" placeholder="搜索名词、解释或例子…" autocomplete="off" aria-label="搜索词条">
+          <button id="clearSearch" class="clear-btn" hidden>清除</button>
+        </div>
+        <div class="chips" id="chips" role="tablist" aria-label="分类筛选"></div>
+      </div>
+    </div>
+
+    <div class="wrap content">
+      <p class="result-line" id="resultLine"></p>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>
+        <div class="empty-mark">∅</div>
+        <p class="empty-title" id="emptyTitle">没有找到相关词条</p>
+        <p class="empty-sub" id="emptySub">换个关键词，或者点下面的按钮回到全部词条。</p>
+        <p class="empty-detail" id="emptyDetail" hidden></p>
+        <button class="btn btn-ghost" id="btnResetFilter" data-mode="reset">查看全部词条</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 管理视图 ============ -->
+  <section id="view-admin" class="wrap admin" hidden>
+
+    <div id="adminLogin" class="login-card" hidden>
+      <p class="overline">ADMIN</p>
+      <h2>管理后台</h2>
+      <p class="muted login-desc">登录后可以新增、修改、删除词条。词条保存在云端，所有访客都能浏览。</p>
+      <p class="cloud-status" id="cloudStatus"></p>
+
+      <div id="loginMethods">
+        <button class="btn btn-primary btn-block" id="btnWorkbuddy" type="button">使用 WorkBuddy 账号登录</button>
+
+        <div class="or"><span>或使用邮箱验证码</span></div>
+
+        <label class="field">
+          <span>邮箱</span>
+          <input id="email" type="email" inputmode="email" placeholder="you@example.com" autocomplete="email">
+        </label>
+        <div class="field-row">
+          <label class="field grow">
+            <span>验证码</span>
+            <input id="otp" type="text" inputmode="numeric" maxlength="6" placeholder="6 位验证码" autocomplete="one-time-code">
+          </label>
+          <button class="btn btn-ghost btn-send" id="btnSendCode" type="button">获取验证码</button>
+        </div>
+        <p class="field-error" id="loginError" hidden></p>
+        <button class="btn btn-primary btn-block" id="btnLogin" type="button">登录</button>
+        <p class="hint">首次使用该邮箱登录会自动注册。登录状态会保留，下次打开无需重复登录。</p>
+      </div>
+      <p class="hint" id="loginReadonly" hidden>这里是只读镜像站点，云端登录在当前域名不可用。<br>请前往官方站点进行词条管理。</p>
+    </div>
+
+    <div id="adminDash" hidden>
+      <div class="admin-head">
+        <div>
+          <p class="overline">ADMIN</p>
+          <h2>词条管理</h2>
+          <p class="muted" id="adminWho"></p>
+        </div>
+        <div class="admin-actions">
+          <button class="btn btn-primary" id="btnNew" type="button">＋ 新增词条</button>
+          <button class="btn btn-ghost" id="btnLogout" type="button">退出登录</button>
+        </div>
+      </div>
+      <div class="admin-tools">
+        <input id="adminSearch" class="input" type="search" placeholder="在词条中查找…" autocomplete="off">
+        <span class="muted" id="adminCount"></span>
+      </div>
+      <div class="admin-list" id="adminList"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>经济学词典 · 用生活理解经济学</p>
+    <a href="#admin">管理入口</a>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="./vendor/workbuddy-cloud-sdk.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
